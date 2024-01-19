@@ -3,11 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AccountModule } from './account/account.module';
 import { UtilsModule } from './utils/utils.module';
-import { EncryptionModule } from './utils/encryption/encryption.module';
 
 @Module({
-  imports: [AccountModule, UtilsModule, EncryptionModule],
+  imports: [AccountModule, UtilsModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
