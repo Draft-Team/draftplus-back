@@ -1,6 +1,5 @@
 import * as crypto from 'node:crypto';
 
-
 type AccountEntityProps = {
   id: string;
   username: string;
@@ -10,7 +9,7 @@ type AccountEntityProps = {
   avatar_url: string;
 };
 
-export type AccountEntityToObject = Omit<AccountEntityProps, "password"> && {}
+export type AccountEntityToObject = Omit<AccountEntityProps, 'password'> & {};
 
 export class AccountEntity {
   readonly id: string;
@@ -48,7 +47,7 @@ export class AccountEntity {
       bio: this.bio,
       email: this.email,
       id: this.id,
-      username: this.username
-    }
+      username: this.username,
+    };
   }
 }

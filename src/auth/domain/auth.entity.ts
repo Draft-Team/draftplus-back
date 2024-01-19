@@ -4,12 +4,12 @@ import {
 } from 'src/account/domain/account.entity';
 
 type AuthEntityProps = {
-  account: AccountEntityToObject;
+  account: Omit<AccountEntityToObject, 'id'>;
   token: string;
 };
 
 export class AuthEntity {
-  readonly account: AccountEntityToObject;
+  readonly account: Omit<AccountEntityToObject, 'id'>;
   readonly token: string;
 
   private constructor(props: AuthEntityProps) {
@@ -18,6 +18,15 @@ export class AuthEntity {
   }
 
   static create(account: AccountEntity, token: string): AuthEntity {
-    return new AuthEntity({ account: account.toObject(), token });
+    const { avatar_url, username, email, bio } = account.toObject();
+    return new AuthEntity({
+      account: {
+        avatar_url,
+        username,
+        email,
+        bio,
+      },
+      token,
+    });
   }
 }
