@@ -29,8 +29,7 @@ export class AuthService {
 
     if (hasUserWithEmail) throw new BadRequestException('EMAIL_ALREADY_USED');
 
-    // TODO: add create account function
-    const account = {} as any;
+    const account = await this.accountService.create(data);
 
     const token = this.jwtService.sign({ id: account.id });
 
