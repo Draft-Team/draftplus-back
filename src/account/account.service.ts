@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AccountEntity } from './domain/account.entity';
 import { CreateAccountDTO } from './dtos/create-account.dto';
-import { EncryptionService } from 'src/utils/encryption/encryption.service';
+import { EncryptionService } from '../utils/encryption/encryption.service';
 
 @Injectable()
 export class AccountService {
