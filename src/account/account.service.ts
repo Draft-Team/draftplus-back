@@ -14,4 +14,8 @@ export class AccountService {
       email: data.email,
     });
   }
+
+  async findByEmail(_email: string): Promise<AccountEntity | null> {
+    return {} as any;
+  }
 }

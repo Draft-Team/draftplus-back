@@ -7,5 +7,6 @@ import { UtilsModule } from 'src/utils/utils.module';
   imports: [UtilsModule],
   providers: [AccountService],
   controllers: [AccountController],
+  exports: [AccountService],
 })
 export class AccountModule { }
