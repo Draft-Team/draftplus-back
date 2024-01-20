@@ -4,7 +4,7 @@ import { AccountService } from './account.service';
 
 @Controller('account')
 export class AccountController {
-  constructor(private service: AccountService) { }
+  constructor(private service: AccountService) {}
 
   @Post()
   async create(@Body() body: CreateAccountDTO) {
