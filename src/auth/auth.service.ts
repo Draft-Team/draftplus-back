@@ -9,7 +9,7 @@ export class AuthService {
   constructor(
     private accountService: AccountService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signIn(data: SignInDTO): Promise<AuthEntity> {
     const account = await this.accountService.findByEmail(data.email);
