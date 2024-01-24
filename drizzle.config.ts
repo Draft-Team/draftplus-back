@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 export default {
-  schema: './src/database/tables/*',
+  schema: './src/database/schemas/*',
   out: './src/database/drizzle/generated',
   driver: 'libsql',
   dbCredentials: {
