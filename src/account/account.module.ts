@@ -9,4 +9,4 @@ import { UtilsModule } from 'src/utils/utils.module';
   controllers: [AccountController],
   exports: [AccountService],
 })
-export class AccountModule { }
+export class AccountModule {}
