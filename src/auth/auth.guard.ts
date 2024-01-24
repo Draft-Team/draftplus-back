@@ -11,7 +11,7 @@ import { jwtContants } from './constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) { }
+  constructor(private jwtService: JwtService) {}
 
   canActivate(
     context: ExecutionContext,
