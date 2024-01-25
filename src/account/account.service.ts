@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AccountEntity, AccountEntityToObject } from './domain/account.entity';
+import { AccountEntity } from './domain/account.entity';
 import { CreateAccountDTO } from './dtos/create-account.dto';
 import { EncryptionService } from '../utils/encryption/encryption.service';
 import { AccountRepository } from '../database/repositories';
@@ -11,7 +11,7 @@ export class AccountService {
     private readonly accountRepository: AccountRepository,
   ) {}
 
-  async create(data: CreateAccountDTO): Promise<AccountEntityToObject> {
+  async create(data: CreateAccountDTO): Promise<AccountEntity> {
     const hashPassword = await this.encryptionService.hash(data.password);
     const account = AccountEntity.create({
       password: hashPassword,
@@ -21,7 +21,7 @@ export class AccountService {
 
     await this.accountRepository.create(account);
 
-    return account.toObject();
+    return account;
   }
 
   async findByEmail(email: string): Promise<AccountEntity | null> {
