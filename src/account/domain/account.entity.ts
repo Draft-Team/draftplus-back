@@ -9,7 +9,7 @@ type AccountEntityProps = {
   avatar_url: string;
 };
 
-export type AccountEntityToObject = Omit<AccountEntityProps, 'password'> & {};
+export type AccountEntityToObject = Omit<AccountEntityProps, 'password'>;
 
 export class AccountEntity {
   readonly id: string;
@@ -39,6 +39,10 @@ export class AccountEntity {
       bio: '',
       avatar_url: '',
     });
+  }
+
+  static build(data: AccountEntityProps) {
+    return new AccountEntity(data);
   }
 
   toObject(): AccountEntityToObject {
