@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "1efb0b34-55fb-40e7-b779-4961bbfa356b",
-  "prevId": "1789d446-b356-48b1-892d-911fc78090a9",
+  "id": "e9fbec32-396d-4e98-99b3-971929803585",
+  "prevId": "1efb0b34-55fb-40e7-b779-4961bbfa356b",
   "tables": {
     "accounts": {
       "name": "accounts",
@@ -48,6 +48,13 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "role_id": {
+          "name": "role_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -55,6 +62,51 @@
           "name": "accounts_email_unique",
           "columns": [
             "email"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "accounts_role_id_roles_id_fk": {
+          "name": "accounts_role_id_roles_id_fk",
+          "tableFrom": "accounts",
+          "tableTo": "roles",
+          "columnsFrom": [
+            "role_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "roles": {
+      "name": "roles",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "roles_name_unique": {
+          "name": "roles_name_unique",
+          "columns": [
+            "name"
           ],
           "isUnique": true
         }
