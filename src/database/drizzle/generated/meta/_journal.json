@@ -15,6 +15,13 @@
       "when": 1706102173988,
       "tag": "0001_gray_lord_hawal",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706236708955,
+      "tag": "0002_heavy_valeria_richards",
+      "breakpoints": true
     }
   ]
 }

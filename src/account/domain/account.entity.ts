@@ -7,6 +7,7 @@ type AccountEntityProps = {
   password: string;
   bio: string;
   avatar_url: string;
+  role_id: string;
 };
 
 export type AccountEntityToObject = Omit<AccountEntityProps, 'password'>;
@@ -18,6 +19,7 @@ export class AccountEntity {
   public password: string;
   public bio: string;
   public avatar_url: string;
+  public role_id: string;
 
   private constructor(props: AccountEntityProps) {
     this.id = props.id;
@@ -26,10 +28,14 @@ export class AccountEntity {
     this.password = props.password;
     this.bio = props.bio;
     this.avatar_url = props.avatar_url;
+    this.role_id = props.role_id;
   }
 
   static create(
-    data: Pick<AccountEntityProps, 'email' | 'username' | 'password'>,
+    data: Pick<
+      AccountEntityProps,
+      'email' | 'username' | 'password' | 'role_id'
+    >,
   ): AccountEntity {
     return new AccountEntity({
       id: crypto.randomUUID(),
@@ -38,6 +44,7 @@ export class AccountEntity {
       email: data.email,
       bio: '',
       avatar_url: '',
+      role_id: data.role_id,
     });
   }
 
@@ -52,6 +59,7 @@ export class AccountEntity {
       email: this.email,
       id: this.id,
       username: this.username,
+      role_id: this.role_id,
     };
   }
 }
