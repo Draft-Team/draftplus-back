@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { AccountService } from '../account/account.service';
 import { AuthEntity } from './domain/auth.entity';
-import { SignInDTO } from './dtos/sign-in.dto';
+import { SignInRequestDTO, SignInResponseDTO } from './dtos/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpDTO } from './dtos/sign-up.dto';
+import { SignUpRequestDTO, SignUpResponseDTO } from './dtos/sign-up.dto';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(data: SignInDTO): Promise<AuthEntity> {
+  async signIn(data: SignInRequestDTO): Promise<SignInResponseDTO> {
     const account = await this.accountService.findByEmail(data.email);
 
     if (!account) throw new BadRequestException('ERR_ACCOUNT_NOT_FOUND');
@@ -24,7 +24,7 @@ export class AuthService {
     return authEntity;
   }
 
-  async signUp(data: SignUpDTO) {
+  async signUp(data: SignUpRequestDTO): Promise<SignUpResponseDTO> {
     const hasUserWithEmail = await this.accountService.findByEmail(data.email);
 
     if (hasUserWithEmail) throw new BadRequestException('EMAIL_ALREADY_USED');

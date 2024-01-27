@@ -9,14 +9,13 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('API das receitas')
-    .setDescription('varias receitas zap.')
-    .setVersion('zap')
-    .addTag('receita')
+    .setTitle('Draft+ API')
+    .setDescription('Documentação da API do projeto Draft+')
+    .setVersion('1.0.0')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(3000);
 }
