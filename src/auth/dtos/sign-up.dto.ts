@@ -27,6 +27,7 @@ export class SignUpRequestDTO {
   @MinLength(8)
   password: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   roleId: string;
