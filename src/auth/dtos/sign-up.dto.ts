@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -5,17 +6,22 @@ import {
   IsStrongPassword,
   MinLength,
 } from 'class-validator';
+import { AccountEntityToObject } from 'src/account/domain/account.entity';
 
-export class SignUpDTO {
+
+export class SignUpRequestDTO {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   username: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
   @IsString()
   email: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsStrongPassword()
   @MinLength(8)
@@ -24,4 +30,12 @@ export class SignUpDTO {
   @IsNotEmpty()
   @IsString()
   roleId: string;
+}
+
+export class SignUpResponseDTO {
+  @ApiProperty()
+  token: string;
+
+  @ApiProperty()
+  account: Omit<AccountEntityToObject, 'id'>;
 }
