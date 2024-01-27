@@ -17,6 +17,7 @@ export class AccountService {
       password: hashPassword,
       username: data.username,
       email: data.email,
+      role_id: data.roleId,
     });
 
     await this.accountRepository.create(account);
