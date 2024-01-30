@@ -18,6 +18,12 @@ export class AccountRepository implements IGenericRepository<AccountEntity> {
       .returning();
   }
 
+  async delete(id: string): Promise<void> {
+    await this.dbService.db
+      .delete(account_schema)
+      .where(eq(account_schema.id, id));
+  }
+
   async findByEmail(email: string): Promise<AccountEntity | null> {
     const account = await this.dbService.db
       .select()

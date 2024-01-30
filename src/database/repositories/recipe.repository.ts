@@ -11,21 +11,34 @@ export class RecipeRepository implements IGenericRepository<RecipeEntity> {
   constructor(private readonly dbService: DrizzleService) {}
 
   async create(data: RecipeEntity): Promise<void> {
-    const { image, steps, title, rating, author_id, description, ingredients } =
-      data;
-    await this.dbService.db
-      .insert(recipe_schema)
-      .values({
-        ingredients: ingredients.join(','),
-        description,
-        title,
-        steps,
-        image,
-        rating,
-        author_id,
-      })
-      .returning();
+    const {
+      id,
+      image,
+      steps,
+      title,
+      rating,
+      author_id,
+      description,
+      ingredients,
+    } = data;
+    await this.dbService.db.insert(recipe_schema).values({
+      id,
+      ingredients: ingredients.join(','),
+      description,
+      title,
+      steps,
+      image,
+      rating,
+      author_id,
+    });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.dbService.db
+      .delete(recipe_schema)
+      .where(eq(recipe_schema.id, id));
+  }
+
   async findById(id: string): Promise<Nullable<RecipeEntity>> {
     const recipe = await this.dbService.db
       .select()
