@@ -1,22 +1,11 @@
 import * as crypto from 'node:crypto';
 import { OmitType } from '../../types/omit.type';
 
-type RecipeEntityProps = {
+type RecipeEntityProps<I extends string | string[] = string[]> = {
   id: string;
   title: string;
   image: string;
-  ingredients: string[];
-  steps: string;
-  description: string;
-  rating: number;
-  author_id: string;
-};
-
-type RecipeEntityBuildProps = {
-  id: string;
-  title: string;
-  image: string;
-  ingredients: string;
+  ingredients: I;
   steps: string;
   description: string;
   rating: number;
@@ -62,7 +51,7 @@ export class RecipeEntity {
     });
   }
 
-  static build(data: RecipeEntityBuildProps) {
+  static build(data: RecipeEntityProps<string>) {
     return new RecipeEntity({
       ...data,
       ingredients: data.ingredients.split(','),

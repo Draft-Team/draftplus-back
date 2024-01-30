@@ -13,7 +13,7 @@ import { AccountModule } from '../account/account.module';
         global: true,
         secret: config.get('JWT_SECRET_KEY'),
         signOptions: {
-          expiresIn: '60s',
+          expiresIn: '24h',
         },
       }),
       inject: [ConfigService],

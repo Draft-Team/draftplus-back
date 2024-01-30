@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AccountRepository, RecipeRepository } from '../database/repositories';
-import { CreateRecipeDTO } from './dtos/create-recipe.dto';
-import { RecipeEntity } from './domain/recipe.entity';
+import { CreateRecipeRequestDTO } from './dtos/create-recipe.dto';
+import { RecipeEntity, RecipeEntityToObject } from './domain/recipe.entity';
+import { DeleteRecipeByIdRequestDTO } from './dtos/delete-recipe-by-id.dto';
 
 @Injectable()
 export class RecipeService {
@@ -10,14 +11,30 @@ export class RecipeService {
     private readonly accountRepo: AccountRepository,
   ) {}
 
-  async create(data: CreateRecipeDTO) {
-    const account = await this.accountRepo.findById(data.author_id);
+  async create(
+    data: CreateRecipeRequestDTO,
+    author_id: string,
+  ): Promise<RecipeEntityToObject> {
+    const account = await this.accountRepo.findById(author_id);
     if (!account) {
-      throw new Error(`Invalid account id: ${data.author_id}`);
+      throw new NotFoundException(`Invalid account id: ${author_id}`);
     }
 
-    const recipe = RecipeEntity.create(data);
+    const recipe = RecipeEntity.create({ ...data, author_id });
 
     await this.recipeRepo.create(recipe);
+
+    return recipe.toObject();
+  }
+
+  async deleteById(
+    data: DeleteRecipeByIdRequestDTO,
+  ): Promise<RecipeEntityToObject> {
+    const recipe = await this.recipeRepo.findById(data.id);
+    if (!recipe) throw new NotFoundException(`Invalid account id: ${data.id}`);
+
+    await this.recipeRepo.delete(data.id);
+
+    return recipe.toObject();
   }
 }
