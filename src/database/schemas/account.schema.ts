@@ -1,6 +1,8 @@
 import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import * as crypto from 'crypto';
 import { role_schema } from './role.schema';
+import { relations } from 'drizzle-orm';
+import { recipe_schema } from './recipe.schema';
 
 export const account_schema = sqliteTable('accounts', {
   id: text('id')
@@ -13,3 +15,7 @@ export const account_schema = sqliteTable('accounts', {
   avatar_url: text('avatar_url'),
   role_id: text('role_id').references(() => role_schema.id),
 });
+
+export const account_relations = relations(account_schema, ({ many }) => ({
+  recipes: many(recipe_schema),
+}));
