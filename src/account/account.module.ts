@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AccountService } from './account.service';
-import { UtilsModule } from 'src/utils/utils.module';
+import { UtilsModule } from '../utils/utils.module';
 
 @Module({
   imports: [UtilsModule],

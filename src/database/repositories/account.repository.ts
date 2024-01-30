@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { DrizzleService } from '../drizzle/drizzle.service';
 import { account_schema } from '../schemas';
-import { IGenericRepository } from 'src/abstracts/generic-repository.abstract';
 import { AccountEntity } from '../../account/domain/account.entity';
 import { eq } from 'drizzle-orm';
+import { IGenericRepository } from '../../abstracts/generic-repository.abstract';
+import { Nullable } from '../../types/nullable.type';
 
 @Injectable()
 export class AccountRepository implements IGenericRepository<AccountEntity> {
@@ -22,6 +23,16 @@ export class AccountRepository implements IGenericRepository<AccountEntity> {
       .select()
       .from(account_schema)
       .where(eq(account_schema.email, email))
+      .get();
+
+    return account ? AccountEntity.build(account) : null;
+  }
+
+  async findById(id: string): Promise<Nullable<AccountEntity>> {
+    const account = await this.dbService.db
+      .select()
+      .from(account_schema)
+      .where(eq(account_schema.id, id))
       .get();
 
     return account ? AccountEntity.build(account) : null;
