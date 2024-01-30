@@ -1,7 +1,7 @@
 import {
   AccountEntity,
   AccountEntityToObject,
-} from 'src/account/domain/account.entity';
+} from '../../account/domain/account.entity';
 
 type AuthEntityProps = {
   account: Omit<AccountEntityToObject, 'id'>;
@@ -18,13 +18,14 @@ export class AuthEntity {
   }
 
   static create(account: AccountEntity, token: string): AuthEntity {
-    const { avatar_url, username, email, bio } = account.toObject();
+    const { avatar_url, username, email, bio, role_id } = account.toObject();
     return new AuthEntity({
       account: {
         avatar_url,
         username,
         email,
         bio,
+        role_id,
       },
       token,
     });

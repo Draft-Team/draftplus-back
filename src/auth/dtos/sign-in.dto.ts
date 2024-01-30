@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
-import { AccountEntityToObject } from 'src/account/domain/account.entity';
+import { AccountEntityToObject } from '../../account/domain/account.entity';
 
 export class SignInRequestDTO {
   @ApiProperty()

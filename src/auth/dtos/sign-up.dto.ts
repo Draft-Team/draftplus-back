@@ -6,8 +6,7 @@ import {
   IsStrongPassword,
   MinLength,
 } from 'class-validator';
-import { AccountEntityToObject } from 'src/account/domain/account.entity';
-
+import { AccountEntityToObject } from '../../account/domain/account.entity';
 
 export class SignUpRequestDTO {
   @ApiProperty()

@@ -1,4 +1,5 @@
 import * as crypto from 'node:crypto';
+import { OmitType } from '../../types/omit.type';
 
 type AccountEntityProps = {
   id: string;
@@ -10,7 +11,7 @@ type AccountEntityProps = {
   role_id: string;
 };
 
-export type AccountEntityToObject = Omit<AccountEntityProps, 'password'>;
+export type AccountEntityToObject = OmitType<AccountEntityProps, 'password'>;
 
 export class AccountEntity {
   readonly id: string;

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { AccountModule } from 'src/account/account.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { AccountModule } from '../account/account.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { ConfigService } from '@nestjs/config';
         global: true,
         secret: config.get('JWT_SECRET_KEY'),
         signOptions: {
-          expiresIn: '60s',
+          expiresIn: '24h',
         },
       }),
       inject: [ConfigService],
