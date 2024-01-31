@@ -1,4 +1,4 @@
-import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import * as crypto from 'crypto';
 import { relations } from 'drizzle-orm';
 import { account_schema } from './account.schema';
@@ -12,7 +12,6 @@ export const recipe_schema = sqliteTable('recipes', {
   ingredients: text('ingredients').notNull(),
   steps: text('steps').notNull(),
   description: text('description').notNull(),
-  rating: int('rating'),
   author_id: text('author_id')
     .notNull()
     .references(() => account_schema.id),

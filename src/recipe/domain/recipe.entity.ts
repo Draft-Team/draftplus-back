@@ -8,7 +8,6 @@ type RecipeEntityProps<I extends string | string[] = string[]> = {
   ingredients: I;
   steps: string;
   description: string;
-  rating: number;
   author_id: string;
 };
 
@@ -21,7 +20,6 @@ export class RecipeEntity {
   public ingredients: string[];
   public steps: string;
   public description: string;
-  public rating: number;
   public author_id: string;
 
   private constructor(props: RecipeEntityProps) {
@@ -31,13 +29,10 @@ export class RecipeEntity {
     this.ingredients = props.ingredients;
     this.steps = props.steps;
     this.description = props.description;
-    this.rating = props.rating;
     this.author_id = props.author_id;
   }
 
-  static create(
-    data: OmitType<RecipeEntityProps, 'rating' | 'id'>,
-  ): RecipeEntity {
+  static create(data: OmitType<RecipeEntityProps, 'id'>): RecipeEntity {
     const { image, steps, title, description, ingredients, author_id } = data;
     return new RecipeEntity({
       id: crypto.randomUUID(),
@@ -47,7 +42,6 @@ export class RecipeEntity {
       description,
       title,
       steps,
-      rating: 0,
     });
   }
 
@@ -60,7 +54,6 @@ export class RecipeEntity {
 
   toObject(): RecipeEntityToObject {
     return {
-      rating: this.rating,
       author_id: this.author_id,
       steps: this.steps,
       title: this.title,
