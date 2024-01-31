@@ -13,7 +13,9 @@ export const recipe_schema = sqliteTable('recipes', {
   steps: text('steps').notNull(),
   description: text('description').notNull(),
   rating: int('rating'),
-  author_id: text('author_id').notNull(),
+  author_id: text('author_id')
+    .notNull()
+    .references(() => account_schema.id),
 });
 
 export const recipe_relations = relations(recipe_schema, ({ one }) => ({
