@@ -4,7 +4,7 @@ import { recipe_rating_schema, recipe_schema } from '../schemas';
 import { RecipeEntity } from '../../recipe/domain/recipe.entity';
 import { IGenericRepository } from '../../abstracts/generic-repository.abstract';
 import { Nullable } from '../../types/nullable.type';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { RecipeRatingEntity } from '../../recipe/domain/recipe-rating.entity';
 
 @Injectable()
@@ -43,8 +43,22 @@ export class RecipeRepository implements IGenericRepository<RecipeEntity> {
 
   async rateRecipe(data: RecipeRatingEntity): Promise<void> {
     const { recipe_id, account_id, rate } = data;
+    const where = and(
+      eq(recipe_rating_schema.recipe_id, recipe_id),
+      eq(recipe_rating_schema.account_id, account_id),
+    );
+    if (
+      await this.dbService.db.select().from(recipe_rating_schema).where(where)
+    ) {
+      await this.dbService.db
+        .update(recipe_rating_schema)
+        .set({ rate })
+        .where(where);
+      return;
+    }
+
     await this.dbService.db
       .insert(recipe_rating_schema)
-      .values({ recipe_id, account_id, rate });
+      .values({ account_id, recipe_id, rate });
   }
 }
