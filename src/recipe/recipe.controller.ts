@@ -12,6 +12,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { CreateRecipeRequestDTO } from './dtos/create-recipe.dto';
 import { Request } from 'express';
 import { ApiTags } from '@nestjs/swagger';
+import { RateRecipeDTO } from './dtos/rate-recipe.dto';
 
 @Controller('recipe')
 @ApiTags('Recipe')
@@ -27,5 +28,15 @@ export class RecipeController {
   @Delete('/:recipe_id')
   deleteById(@Param('recipe_id') recipe_id: string) {
     return this.recipeService.deleteById({ id: recipe_id });
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('/:recipe_id/rate')
+  rate(
+    @Body() data: RateRecipeDTO,
+    @Param('recipe_id') recipe_id: string,
+    @Req() req: Request,
+  ) {
+    return this.recipeService.rate(data, recipe_id, req.account.id);
   }
 }
