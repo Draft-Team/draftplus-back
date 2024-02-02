@@ -47,8 +47,13 @@ export class RecipeRepository implements IGenericRepository<RecipeEntity> {
       eq(recipe_rating_schema.recipe_id, recipe_id),
       eq(recipe_rating_schema.account_id, account_id),
     );
+
     if (
-      await this.dbService.db.select().from(recipe_rating_schema).where(where)
+      await this.dbService.db
+        .select()
+        .from(recipe_rating_schema)
+        .where(where)
+        .get()
     ) {
       await this.dbService.db
         .update(recipe_rating_schema)
