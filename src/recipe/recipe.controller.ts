@@ -37,6 +37,6 @@ export class RecipeController {
     @Param('recipe_id') recipe_id: string,
     @Req() req: Request,
   ) {
-    this.recipeService.rate(data, recipe_id, req.account.id);
+    return this.recipeService.rate(data, recipe_id, req.account.id);
   }
 }
