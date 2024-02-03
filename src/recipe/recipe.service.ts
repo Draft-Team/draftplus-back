@@ -3,8 +3,9 @@ import { AccountRepository, RecipeRepository } from '../database/repositories';
 import { CreateRecipeRequestDTO } from './dtos/create-recipe.dto';
 import { RecipeEntity, RecipeEntityToObject } from './domain/recipe.entity';
 import { DeleteRecipeByIdRequestDTO } from './dtos/delete-recipe-by-id.dto';
-import { RateRecipeDTO } from './dtos/rate-recipe.dto';
+import { RateRecipeRequestDTO } from './dtos/rate-recipe.dto';
 import { RecipeRatingEntity } from './domain/recipe-rating.entity';
+import { UpdateRecipeRequestDTO } from './dtos/update-recipe.dto';
 
 @Injectable()
 export class RecipeService {
@@ -40,7 +41,31 @@ export class RecipeService {
     return recipe.toObject();
   }
 
-  async rate(data: RateRecipeDTO, recipe_id: string, account_id: string) {
+  async update(
+    id: string,
+    data: UpdateRecipeRequestDTO,
+  ): Promise<RecipeEntityToObject> {
+    const recipe = await this.recipeRepo.findById(id);
+
+    if (!recipe) throw new NotFoundException(`Invalid account id: ${id}`);
+
+    recipe
+      .changeTitle(data.title)
+      .changeImage(data.image)
+      .changeSteps(data.steps)
+      .changeDescription(data.description)
+      .changeIngredients(data.ingredients);
+
+    await this.recipeRepo.update(id, recipe);
+
+    return recipe.toObject();
+  }
+
+  async rate(
+    data: RateRecipeRequestDTO,
+    recipe_id: string,
+    account_id: string,
+  ) {
     const recipeRating = RecipeRatingEntity.create({
       rate: data.rate,
       account_id,

@@ -4,6 +4,7 @@ import {
   Delete,
   Param,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -12,7 +13,11 @@ import { AuthGuard } from '../auth/auth.guard';
 import { CreateRecipeRequestDTO } from './dtos/create-recipe.dto';
 import { Request } from 'express';
 import { ApiTags } from '@nestjs/swagger';
-import { RateRecipeDTO } from './dtos/rate-recipe.dto';
+import { RateRecipeRequestDTO } from './dtos/rate-recipe.dto';
+import {
+  UpdateRecipeRequestDTO,
+  UpdateRecipeRequestParamDTO,
+} from './dtos/update-recipe.dto';
 
 @Controller('recipe')
 @ApiTags('Recipe')
@@ -26,17 +31,26 @@ export class RecipeController {
 
   @UseGuards(AuthGuard)
   @Delete('/:recipe_id')
-  deleteById(@Param('recipe_id') recipe_id: string) {
-    return this.recipeService.deleteById({ id: recipe_id });
+  deleteById(@Param() params: UpdateRecipeRequestParamDTO) {
+    return this.recipeService.deleteById({ id: params.recipe_id });
   }
 
   @UseGuards(AuthGuard)
   @Post('/:recipe_id/rate')
   rate(
-    @Body() data: RateRecipeDTO,
-    @Param('recipe_id') recipe_id: string,
+    @Body() data: RateRecipeRequestDTO,
+    @Param() params: UpdateRecipeRequestParamDTO,
     @Req() req: Request,
   ) {
-    return this.recipeService.rate(data, recipe_id, req.account.id);
+    return this.recipeService.rate(data, params.recipe_id, req.account.id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('/:recipe_id')
+  update(
+    @Body() data: UpdateRecipeRequestDTO,
+    @Param() params: UpdateRecipeRequestParamDTO,
+  ) {
+    return this.recipeService.update(params.recipe_id, data);
   }
 }
