@@ -25,12 +25,14 @@ export class AccountRepository implements IGenericRepository<AccountEntity> {
   }
 
   async update(id: string, data: Partial<AccountEntity>): Promise<void> {
-    // TODO: implement update
-    console.log(id, data);
+    await this.dbService.db
+      .update(account_schema)
+      .set({ ...data })
+      .where(eq(account_schema.id, id));
     return;
   }
 
-  async findByEmail(email: string): Promise<AccountEntity | null> {
+  async findByEmail(email: string): Promise<Nullable<AccountEntity>> {
     const account = await this.dbService.db
       .select()
       .from(account_schema)

@@ -4,6 +4,7 @@ import { CreateAccountDTO } from './dtos/create-account.dto';
 import { EncryptionService } from '../utils/encryption/encryption.service';
 import { AccountRepository } from '../database/repositories';
 import { Nullable } from '../types/nullable.type';
+import { UpdateAccountDTO } from './dtos/update-user.dto';
 
 @Injectable()
 export class AccountService {
@@ -32,5 +33,9 @@ export class AccountService {
 
   async findById(id: string): Promise<Nullable<AccountEntity>> {
     return await this.accountRepository.findById(id);
+  }
+
+  async update(id: string, data: UpdateAccountDTO): Promise<void> {
+    this.accountRepository.update(id, data);
   }
 }
