@@ -38,4 +38,16 @@ export class AccountService {
   async update(id: string, data: UpdateAccountDTO): Promise<void> {
     this.accountRepository.update(id, data);
   }
+
+  async updateEmail(id: string, data: any): Promise<void> {
+    // TODO: implement update email
+    console.log({ id, data });
+    return;
+  }
+
+  async updatePassword(id: string, data: any): Promise<void> {
+    // TODO: implement update password
+    console.log({ id, data });
+    return;
+  }
 }
