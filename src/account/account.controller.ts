@@ -5,9 +5,13 @@ import {
   Param,
   ParseUUIDPipe,
   Put,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { UpdateAccountDTO } from './dtos/update-user.dto';
+import { AuthGuard } from '../auth/auth.guard';
+import { Request } from 'express';
 
 @Controller('account')
 export class AccountController {
@@ -18,11 +22,10 @@ export class AccountController {
     return this.accountSerivce.findById(id);
   }
 
-  @Put(':id')
-  update(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() body: UpdateAccountDTO,
-  ) {
+  @UseGuards(AuthGuard)
+  @Put()
+  update(@Req() request: Request, @Body() body: UpdateAccountDTO) {
+    const id = request.account.id;
     this.accountSerivce.update(id, body);
   }
 }
