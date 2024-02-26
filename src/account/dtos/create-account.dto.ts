@@ -19,4 +19,8 @@ export class CreateAccountDTO {
   @IsString()
   @IsStrongPassword()
   password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  roleId: string;
 }

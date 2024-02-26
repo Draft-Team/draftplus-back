@@ -1,0 +1,55 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1706057958166,
+      "tag": "0000_funny_pepper_potts",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1706102173988,
+      "tag": "0001_gray_lord_hawal",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706236708955,
+      "tag": "0002_heavy_valeria_richards",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1706571696320,
+      "tag": "0003_married_goliath",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1706654873310,
+      "tag": "0004_tense_ultron",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1706664487493,
+      "tag": "0005_cynical_thunderball",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1706669584663,
+      "tag": "0006_certain_captain_britain",
+      "breakpoints": true
+    }
+  ]
+}
