@@ -7,8 +7,8 @@ export class CreateRecipeRequestDTO {
   @IsString()
   image: string;
 
-  @IsString({ each: true })
-  ingredients: string[];
+  @IsString()
+  ingredients: string;
 
   @IsString()
   steps: string;
