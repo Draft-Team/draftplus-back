@@ -16,7 +16,7 @@ export class RecipeRepository implements IGenericRepository<RecipeEntity> {
       data;
     await this.dbService.db.insert(recipe_schema).values({
       id,
-      ingredients: ingredients.join(','),
+      ingredients,
       description,
       title,
       steps,
@@ -31,19 +31,14 @@ export class RecipeRepository implements IGenericRepository<RecipeEntity> {
       .where(eq(recipe_schema.id, id));
   }
 
-  async update(id: string, data: RecipeEntity): Promise<void> {
-    await this.dbService.db
+  async update(id: string, data: Partial<RecipeEntity>): Promise<RecipeEntity> {
+    const [recipe] = await this.dbService.db
       .update(recipe_schema)
-      .set({
-        id: data.id,
-        image: data.image,
-        steps: data.steps,
-        title: data.title,
-        author_id: data.author_id,
-        description: data.description,
-        ingredients: data.ingredients && data.ingredients.join(','),
-      })
-      .where(eq(recipe_schema.id, id));
+      .set({ ...data })
+      .where(eq(recipe_schema.id, id))
+      .returning();
+
+    return RecipeEntity.build(recipe);
   }
 
   async findById(id: string): Promise<Nullable<RecipeEntity>> {

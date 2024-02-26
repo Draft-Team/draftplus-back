@@ -14,8 +14,7 @@ export class AccountRepository implements IGenericRepository<AccountEntity> {
     const { username, email, password, bio, avatar_url } = data;
     await this.dbService.db
       .insert(account_schema)
-      .values({ username, email, password, bio, avatar_url })
-      .returning();
+      .values({ username, email, password, bio, avatar_url });
   }
 
   async delete(id: string): Promise<void> {
@@ -24,12 +23,17 @@ export class AccountRepository implements IGenericRepository<AccountEntity> {
       .where(eq(account_schema.id, id));
   }
 
-  async update(id: string, data: Partial<AccountEntity>): Promise<void> {
-    await this.dbService.db
+  async update(
+    id: string,
+    data: Partial<AccountEntity>,
+  ): Promise<AccountEntity> {
+    const [account] = await this.dbService.db
       .update(account_schema)
       .set({ ...data })
-      .where(eq(account_schema.id, id));
-    return;
+      .where(eq(account_schema.id, id))
+      .returning();
+
+    return AccountEntity.build(account);
   }
 
   async findByEmail(email: string): Promise<Nullable<AccountEntity>> {

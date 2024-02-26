@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { AccountRepository, RecipeRepository } from '../database/repositories';
 import { CreateRecipeRequestDTO } from './dtos/create-recipe.dto';
 import { RecipeEntity, RecipeEntityToObject } from './domain/recipe.entity';
@@ -45,20 +49,15 @@ export class RecipeService {
     id: string,
     data: UpdateRecipeRequestDTO,
   ): Promise<RecipeEntityToObject> {
+    if (!Object.keys(data).length)
+      throw new BadRequestException('DTO_IS_EMPTY');
     const recipe = await this.recipeRepo.findById(id);
 
-    if (!recipe) throw new NotFoundException(`Invalid account id: ${id}`);
+    if (!recipe) throw new NotFoundException(`Invalid recipe id: ${id}`);
 
-    recipe
-      .changeTitle(data.title)
-      .changeImage(data.image)
-      .changeSteps(data.steps)
-      .changeDescription(data.description)
-      .changeIngredients(data.ingredients);
+    const update = await this.recipeRepo.update(id, data);
 
-    await this.recipeRepo.update(id, recipe);
-
-    return recipe.toObject();
+    return update.toObject();
   }
 
   async rate(

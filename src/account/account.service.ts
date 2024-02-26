@@ -1,5 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { AccountEntity } from './domain/account.entity';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { AccountEntity, AccountEntityToObject } from './domain/account.entity';
 import { CreateAccountDTO } from './dtos/create-account.dto';
 import { EncryptionService } from '../utils/encryption/encryption.service';
 import { AccountRepository } from '../database/repositories';
@@ -35,8 +39,20 @@ export class AccountService {
     return await this.accountRepository.findById(id);
   }
 
-  async update(id: string, data: UpdateAccountDTO): Promise<void> {
-    this.accountRepository.update(id, data);
+  async update(
+    id: string,
+    data: UpdateAccountDTO,
+  ): Promise<AccountEntityToObject> {
+    if (!Object.keys(data).length) {
+      throw new BadRequestException('DTO_IS_EMPTY');
+    }
+    const account = await this.accountRepository.findById(id);
+
+    if (!account) throw new NotFoundException(`Invalid recipe id: ${id}`);
+
+    const update = await this.accountRepository.update(id, data);
+
+    return update.toObject();
   }
 
   async updateEmail(id: string, data: any): Promise<void> {
