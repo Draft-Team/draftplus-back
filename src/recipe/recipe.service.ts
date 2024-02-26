@@ -47,7 +47,7 @@ export class RecipeService {
   ): Promise<RecipeEntityToObject> {
     const recipe = await this.recipeRepo.findById(id);
 
-    if (!recipe) throw new NotFoundException(`Invalid account id: ${id}`);
+    if (!recipe) throw new NotFoundException(`Invalid recipe id: ${id}`);
 
     recipe
       .changeTitle(data.title)

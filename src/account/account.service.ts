@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AccountEntity } from './domain/account.entity';
 import { CreateAccountDTO } from './dtos/create-account.dto';
 import { EncryptionService } from '../utils/encryption/encryption.service';
@@ -36,6 +36,9 @@ export class AccountService {
   }
 
   async update(id: string, data: UpdateAccountDTO): Promise<void> {
+    const account = await this.accountRepository.findById(id);
+
+    if (!account) throw new NotFoundException(`Invalid recipe id: ${id}`);
     this.accountRepository.update(id, data);
   }
 
