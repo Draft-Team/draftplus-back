@@ -32,42 +32,6 @@ export class AccountEntity {
     this.role_id = props.role_id;
   }
 
-  setUsername(username?: string): this {
-    if (!username) return this;
-    this.username = username;
-    return this;
-  }
-
-  setEmail(email?: string): this {
-    if (!email) return this;
-    this.email = email;
-    return this;
-  }
-
-  setPassword(password?: string): this {
-    if (!password) return this;
-    this.password = password;
-    return this;
-  }
-
-  setBio(bio?: string): this {
-    if (!bio) return this;
-    this.bio = bio;
-    return this;
-  }
-
-  setAvatarUrl(avatarUrl?: string): this {
-    if (!avatarUrl) return this;
-    this.avatar_url = avatarUrl;
-    return this;
-  }
-
-  setRoleId(roleId?: string): this {
-    if (!roleId) return this;
-    this.role_id = roleId;
-    return this;
-  }
-
   static create(
     data: Pick<
       AccountEntityProps,

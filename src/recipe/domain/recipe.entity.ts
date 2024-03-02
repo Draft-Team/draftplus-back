@@ -49,40 +49,6 @@ export class RecipeEntity {
     return new RecipeEntity(data);
   }
 
-  changeTitle(title?: string) {
-    if (!title) return this;
-
-    this.title = title;
-    return this;
-  }
-
-  changeImage(image?: string) {
-    if (!image) return this;
-
-    this.image = image;
-    return this;
-  }
-
-  changeDescription(description?: string) {
-    if (!description) return this;
-    this.description = description;
-    return this;
-  }
-
-  changeSteps(steps?: string) {
-    if (!steps) return this;
-
-    this.steps = steps;
-
-    return this;
-  }
-
-  changeIngredients(ingredients?: string | string[]) {
-    if (!ingredients) return this;
-
-    return this;
-  }
-
   toObject(): RecipeEntityToObject {
     return {
       author_id: this.author_id,
